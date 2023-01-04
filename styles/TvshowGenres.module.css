@@ -1,0 +1,26 @@
+.genresContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin-left: 200px;
+}
+
+.genre{
+    background-color: var(--semi-dark-blue);
+    color: var(--white);
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.link{
+    text-decoration: none;
+    color: var(--white);
+}

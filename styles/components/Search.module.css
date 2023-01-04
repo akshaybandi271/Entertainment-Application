@@ -1,0 +1,43 @@
+.search{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    margin: 20px auto;
+}
+
+.searchIcon{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    color: #fff;
+    top: 30px;
+    left: 16%;
+}
+
+.searchInput{
+    width: 800px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: var(--semi-dark-blue);
+    padding: 0 10px;
+    color: var(--white);
+    margin-left: 60px;
+    border: none;
+    outline: none;
+    font-size: 1.125rem;
+}
+
+.searchInput::placeholder{
+    color: var(--grey-placeholder);
+    font-family: inherit;
+}
+
+.btn{
+    background-color: var(--greyish-blue);
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: var(--white);
+    font-size: var(--body-sm);
+}
+
