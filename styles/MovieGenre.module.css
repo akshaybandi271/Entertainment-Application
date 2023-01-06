@@ -4,3 +4,30 @@
     gap: 55px;
     margin-left: 150px;
 }
+.page{
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.btn{
+    background-color: inherit;
+    color: var(--white);
+    padding: 8px 15px;
+    border: 1px solid var(--white);
+    border-radius: 5px;
+}
+
+.btnsContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.pageNumber{
+    background-color: var(--white);
+    color: var(--dark-blue);
+    padding: 8px 15px;
+    border-radius: 2px;
+}

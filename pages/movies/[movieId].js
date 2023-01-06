@@ -1,8 +1,12 @@
 import { moviesApi } from "../../axios"
 import { useRouter } from "next/router"
 import styles from "../../styles/Movie.module.css"
+import { useWatchListContext } from "../../context/watchList"
 
 const SingleMoviePage = ({ movie, cast }) => {
+  const { saved, setSaved } = useWatchListContext()
+
+  const isMovieAddedToWatchList = saved.moviesList.find((savedMovie) => savedMovie.id === movie.id)
 
   const router = useRouter()
   const {
@@ -26,6 +30,12 @@ const SingleMoviePage = ({ movie, cast }) => {
     router.push(`https://www.imdb.com/title/${imdb_id}`)
   }
 
+  const handleWatchLaterClick = (movie) => {
+    setSaved(prevState => {
+       return {...prevState, moviesList: [...prevState.moviesList,movie]}
+    })
+  }
+
   return (
     <div className={styles.container}>
       <img
@@ -40,29 +50,29 @@ const SingleMoviePage = ({ movie, cast }) => {
         {/* Make a Rating Component */}
 
         <div className={styles.detailsContainer}>
-            <div>
-                <p className={styles.detailTitle}>Length</p>
-                <p className={styles.detailText}>{runtime} min</p>
-            </div>
-            <div>
-                <p className={styles.detailTitle}>Language</p>
-                <p className={styles.detailText}>ENGLISH</p>
-            </div>
-            <div>
-                <p className={styles.detailTitle}>Year</p>
-                <p className={styles.detailText}>{release_date.substring(0,4)}</p>
-            </div>
-            <div>
-                <p className={styles.detailTitle}>status</p>
-                <p className={styles.detailText}>{adult ? "A" : "N/A"}</p>
-            </div>
+          <div>
+            <p className={styles.detailTitle}>Length</p>
+            <p className={styles.detailText}>{runtime} min</p>
+          </div>
+          <div>
+            <p className={styles.detailTitle}>Language</p>
+            <p className={styles.detailText}>ENGLISH</p>
+          </div>
+          <div>
+            <p className={styles.detailTitle}>Year</p>
+            <p className={styles.detailText}>{release_date.substring(0, 4)}</p>
+          </div>
+          <div>
+            <p className={styles.detailTitle}>status</p>
+            <p className={styles.detailText}>{adult ? "A" : "N/A"}</p>
+          </div>
         </div>
 
         <p className={styles.subTitle}>Genres</p>
         <div className={styles.genreContainer}>
-            {genres.map(genre => {
-                return <Genre genre={genre.name} /> 
-            })}
+          {genres.map((genre) => {
+            return <Genre genre={genre.name} />
+          })}
         </div>
 
         <p className={styles.subTitle}>Synopsis</p>
@@ -70,34 +80,49 @@ const SingleMoviePage = ({ movie, cast }) => {
 
         <p className={styles.subTitle}>Cast</p>
         {/* Loop over every object of cast and return a component */}
-         <div className={styles.castContainer}>
-            {cast.cast.map(cast => {
-                return <Cast name={cast.name}/>
-            })}
-         </div>
+        <div className={styles.castContainer}>
+          {cast.cast.map((cast) => {
+            return <Cast name={cast.name} />
+          })}
+        </div>
 
-        <button className={styles.btn} onClick={handleWebsiteClick}>Website</button>
-        <button className={styles.btn} onClick={handleImdbClick}>IMDB</button>
+        <button className={styles.btn} onClick={handleWebsiteClick}>
+          Website
+        </button>
+        <button className={styles.btn} onClick={handleImdbClick}>
+          IMDB
+        </button>
+
+        {isMovieAddedToWatchList ? (
+          <button className={styles.btn} onClick={() => router.push("/bookmarked")}>
+            Go to Watch Later
+          </button>
+        ) : (
+          <button className={styles.btn} onClick={() => handleWatchLaterClick(movie)}>
+            {" "}
+            Add Watch Later
+          </button>
+        )}
       </div>
     </div>
   )
 }
 
- const Genre = ({genre}) => {
-     return (
-        <div className={styles.genre}>
-            <p className={styles.genreText}>{genre}</p>
-        </div>
-     )
- }
+const Genre = ({ genre }) => {
+  return (
+    <div className={styles.genre}>
+      <p className={styles.genreText}>{genre}</p>
+    </div>
+  )
+}
 
- const Cast = ({name}) => {
-    return (
-        <div className={styles.cast}>
-            <p>{name}</p>
-        </div>
-    )
- }
+const Cast = ({ name }) => {
+  return (
+    <div className={styles.cast}>
+      <p>{name}</p>
+    </div>
+  )
+}
 
 export const getServerSideProps = async (context) => {
   const { movieId } = context.params

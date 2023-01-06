@@ -9,16 +9,17 @@ export default function Home({ allMovies, allTvShows }) {
   // Make a trending component
   // Think how to get the category of movies .
   
+//  Adding pagination into individual pages . in Movies and Tvshows
+
 
 // Todo:
-  // What am thinking is that every Card component should have button on hover of 
-  // bookmark svg and onClick of that should the item to bookmarks array.
-
+  
   // Then bookmarks page on every card component it should have a button for delete form 
-  //  bookmark onCLick of it should remove the item from bookmarks array
+  //  bookmark onCLick of it should remove the item from bookmarks array.
+  
+  // Only added moviePage , add to restofpages.
 
-
-  // then adding context for favourites shows and movies and adding localstorage
+  // And also persist the state using localstorage!!
 
   // Adding Loading States and Cleaning the look
 
