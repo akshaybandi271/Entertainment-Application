@@ -10,9 +10,20 @@ const SingleTvShowPage = ({ tvshow, cast }) => {
   const isTvshowAddedToWatchList = saved.tvshowsList.find((show) => show.id === tvshow.id)
 
   const handleAddTvshow = (tvshow) => {
-      setSaved(prevState => {
-        return {...prevState, tvshowsList: [...prevState.tvshowsList, tvshow]}
-      })
+    setSaved((prevState) => {
+      return { ...prevState, tvshowsList: [...prevState.tvshowsList, tvshow] }
+    })
+    router.push("/bookmarked")
+  }
+
+  const handleRemoveTvshow = (tvshowId) => {
+    setSaved((prevState) => {
+      return {
+        ...prevState,
+        tvshowsList: prevState.tvshowsList.filter((tvshow) => tvshow.id !== tvshowId),
+      }
+    })
+    router.push("/bookmarked")
   }
 
   const {
@@ -30,7 +41,6 @@ const SingleTvShowPage = ({ tvshow, cast }) => {
   } = tvshow
 
   const languages = spoken_languages.map((language) => language.english_name)
-
 
   const handleWebsiteClick = () => {
     router.push(homepage)
@@ -98,8 +108,8 @@ const SingleTvShowPage = ({ tvshow, cast }) => {
         )}
 
         {isTvshowAddedToWatchList ? (
-          <button className={styles.btn} onClick={() => router.push("/bookmarked")}>
-            Go to WatchList
+          <button className={styles.btn} onClick={() => handleRemoveTvshow(tvshow.id)}>
+            Remove from WatchList
           </button>
         ) : (
           <button className={styles.btn} onClick={() => handleAddTvshow(tvshow)}>
@@ -141,7 +151,7 @@ export const getServerSideProps = async (context) => {
     props: {
       tvshow: tvshowResponse.data,
       cast: castResponse.data,
-    }
+    },
   }
 }
 

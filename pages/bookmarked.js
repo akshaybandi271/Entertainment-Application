@@ -8,17 +8,18 @@ const BookmarkedPage = () => {
 
   return (
     <div className={styles.container}>
-
-        <h3>List of Movies</h3>
+      <h3>List of Movies</h3>
       {saved.moviesList.length ? (
         <div className={styles.showsContainer}>
           {saved.moviesList.map((movie) => {
             return <MovieCard movie={movie} />
           })}
         </div>
-      ) : ""}
+      ) : (
+        ""
+      )}
 
-        <h3>List of Tvshows</h3>
+      <h3>List of Tvshows</h3>
       <div className={styles.showsContainer}>
         {saved.tvshowsList.map((tvshow) => {
           return <TvShowCard tvshow={tvshow} />

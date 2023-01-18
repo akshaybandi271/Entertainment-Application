@@ -1,4 +1,4 @@
-
+import Image from "next/image"
 import Link from "next/link"
 import styles from "../../styles/components/MovieCard.module.css"
 
@@ -38,7 +38,7 @@ const MovieCard = ({ movie }) => {
   return (
     <Link href={`/movies/${id}`} className={styles.link}>
       <div className={styles.card}>
-        <img
+        <Image
           src={`https://image.tmdb.org/t/p/w500${backdrop_path}`}
           className={styles.image}
         />

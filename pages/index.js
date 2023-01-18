@@ -1,29 +1,20 @@
 import Head from "next/head"
-import styles from "../styles/Home.module.css"
 import MovieCategory from "../components/movies/MovieCategory"
 import TvShowCategory from "../components/tvShows/TvShowCategory"
 import { getMovies, getTvShows } from "../utils"
 
 export default function Home({ allMovies, allTvShows }) {
 
-  // Make a trending component
-  // Think how to get the category of movies .
-  
-//  Adding pagination into individual pages . in Movies and Tvshows
+  // Todos :
+    // Clean up the components make single component for both movie and tvshow.
+    // Use moblie first Apporach  to make Responsive design.
+    // Clean Up the css files to tailwind css.
+    // Add the Single page for Categories like Trending, popular ...
 
-
-// Todo:
-  
-  // Then bookmarks page on every card component it should have a button for delete form 
-  //  bookmark onCLick of it should remove the item from bookmarks array.
-  
-  // Only added moviePage , add to restofpages.
-
-  // And also persist the state using localstorage!!
-
-  // Adding Loading States and Cleaning the look
-
-  // Fucking the Code Tiding and Clean , reuse and DRY . I know that You can do it alot better.
+  // Todo Features: 
+     // Search Functionality and nice to have if to get based on searched query.
+    //  Use SWR for server side state .
+    // Write Docmentation for the project. things like what you have learned.
 
 
   return (
@@ -34,7 +25,7 @@ export default function Home({ allMovies, allTvShows }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.container}>
+      <main className="container">
         {allMovies.map((movies) => {
           return <MovieCategory data={movies} />
         })}
@@ -58,8 +49,7 @@ export const getStaticProps = async () => {
   return {
     props: {
       allMovies,
-      allTvShows,
+      allTvShows
     },
   }
 }
-

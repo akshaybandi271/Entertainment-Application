@@ -1,12 +1,13 @@
 import { moviesApi } from "../../axios"
 import { useRouter } from "next/router"
-import styles from "../../styles/Movie.module.css"
 import { useWatchListContext } from "../../context/watchList"
 
 const SingleMoviePage = ({ movie, cast }) => {
   const { saved, setSaved } = useWatchListContext()
 
-  const isMovieAddedToWatchList = saved.moviesList.find((savedMovie) => savedMovie.id === movie.id)
+  const isMovieAddedToWatchList = saved.moviesList.find(
+    (savedMovie) => savedMovie.id === movie.id
+  )
 
   const router = useRouter()
   const {
@@ -30,77 +31,88 @@ const SingleMoviePage = ({ movie, cast }) => {
     router.push(`https://www.imdb.com/title/${imdb_id}`)
   }
 
-  const handleWatchLaterClick = (movie) => {
-    setSaved(prevState => {
-       return {...prevState, moviesList: [...prevState.moviesList,movie]}
+  const handleAddMovieToWatchList = (movie) => {
+    setSaved((prevState) => {
+      return { ...prevState, moviesList: [...prevState.moviesList, movie] }
     })
+    router.push("/bookmarked")
+  }
+
+  const handleRemoveMovie = (movieId) => {
+    setSaved((prevState) => {
+      return {
+        ...prevState,
+        moviesList: prevState.moviesList.filter((movie) => movie.id !== movieId),
+      }
+    })
+    router.push("/bookmarked")
   }
 
   return (
-    <div className={styles.container}>
+    <div className="single-page-container">
       <img
         src={`https://image.tmdb.org/t/p/w500${poster_path}`}
         alt={`image of ${title}`}
-        className={styles.image}
+        className="single-page-image"
       />
-      <div className={styles.movieDetails}>
-        <h2 className={styles.title}>{title}</h2>
-        <p className={styles.tagname}>{tagline}</p>
+      <div className="single-page-content-details">
+        <h2 className="single-page-title">{title}</h2>
+        <p className="single-page-tagname">{tagline}</p>
 
         {/* Make a Rating Component */}
 
-        <div className={styles.detailsContainer}>
+        <div className="single-page-details-container">
           <div>
-            <p className={styles.detailTitle}>Length</p>
-            <p className={styles.detailText}>{runtime} min</p>
+            <p className="single-page-detail-title">Length</p>
+            <p className="single-page-detail-text">{runtime} min</p>
           </div>
           <div>
-            <p className={styles.detailTitle}>Language</p>
-            <p className={styles.detailText}>ENGLISH</p>
+            <p className="single-page-detail-title">Language</p>
+            <p className="single-page-detail-text">ENGLISH</p>
           </div>
           <div>
-            <p className={styles.detailTitle}>Year</p>
-            <p className={styles.detailText}>{release_date.substring(0, 4)}</p>
+            <p className="single-page-detail-title">Year</p>
+            <p className="single-page-detail-text">{release_date.substring(0, 4)}</p>
           </div>
           <div>
-            <p className={styles.detailTitle}>status</p>
-            <p className={styles.detailText}>{adult ? "A" : "N/A"}</p>
+            <p className="single-page-detail-title">status</p>
+            <p className="single-page-detail-text">{adult ? "A" : "N/A"}</p>
           </div>
         </div>
 
-        <p className={styles.subTitle}>Genres</p>
-        <div className={styles.genreContainer}>
+        <p className={"single-page-sub-title"}>Genres</p>
+        <div className={"single-page-genre-container"}>
           {genres.map((genre) => {
             return <Genre genre={genre.name} />
           })}
         </div>
 
-        <p className={styles.subTitle}>Synopsis</p>
-        <p className={styles.overviewText}>{overview}</p>
+        <p className={"single-page-sub-title"}>Synopsis</p>
+        <p className={"single-page-overview-text"}>{overview}</p>
 
-        <p className={styles.subTitle}>Cast</p>
+        <p className={"single-page-sub-title"}>Cast</p>
         {/* Loop over every object of cast and return a component */}
-        <div className={styles.castContainer}>
+        <div className={"single-page-cast-container"}>
           {cast.cast.map((cast) => {
             return <Cast name={cast.name} />
           })}
         </div>
 
-        <button className={styles.btn} onClick={handleWebsiteClick}>
+        <button className={"single-page-btn"} onClick={handleWebsiteClick}>
           Website
         </button>
-        <button className={styles.btn} onClick={handleImdbClick}>
+        <button className={"single-page-btn"} onClick={handleImdbClick}>
           IMDB
         </button>
 
         {isMovieAddedToWatchList ? (
-          <button className={styles.btn} onClick={() => router.push("/bookmarked")}>
-            Go to Watch Later
+          <button className={"single-page-btn"} onClick={() => handleRemoveMovie(movie.id)}>
+            Remove from WatchList
           </button>
         ) : (
-          <button className={styles.btn} onClick={() => handleWatchLaterClick(movie)}>
+          <button className={"single-page-btn"} onClick={() => handleAddMovieToWatchList(movie)}>
             {" "}
-            Add Watch Later
+            Add to WatchList
           </button>
         )}
       </div>
@@ -110,15 +122,15 @@ const SingleMoviePage = ({ movie, cast }) => {
 
 const Genre = ({ genre }) => {
   return (
-    <div className={styles.genre}>
-      <p className={styles.genreText}>{genre}</p>
+    <div className={"single-page-genre"}>
+      <p className={"single-page-genre-text"}>{genre}</p>
     </div>
   )
 }
 
 const Cast = ({ name }) => {
   return (
-    <div className={styles.cast}>
+    <div className={"single-page-cast"}>
       <p>{name}</p>
     </div>
   )
